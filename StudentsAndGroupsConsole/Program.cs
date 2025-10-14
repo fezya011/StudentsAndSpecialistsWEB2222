@@ -18,8 +18,10 @@ namespace StudentsAndGroupsConsole
                 {
                     Console.WriteLine("\nВыберите действие:");
                     Console.WriteLine("1 - Получить список студентов из группы по указанному индексу группы");
-                    Console.WriteLine("2 - ");
-                    Console.WriteLine("3 - Выход");
+                    Console.WriteLine("2 - Получить список кол-ва мальчиков и девочек из группы по указанному индексу группы");
+                    Console.WriteLine("3 - Получить список студентов не привязанных к группе");
+                    Console.WriteLine("4 - Получить список пустых групп");
+                    Console.WriteLine("5 - Выход");
                     Console.Write("Ваш выбор: ");
 
                     var choice = Console.ReadLine();
@@ -30,9 +32,15 @@ namespace StudentsAndGroupsConsole
                             GetListStudentsByIndex();
                             break;
                         case "2":
-                           
+                            GetCountGendersByIndexGroup();
                             break;
                         case "3":
+                            GetListUnboundStudents();
+                            break;
+                        case "4":
+                            GetListEmptyGroups();
+                            break;
+                        case "5":
                             exit = true;
                             break;
                         default:
@@ -68,6 +76,83 @@ namespace StudentsAndGroupsConsole
                     Console.WriteLine($"Имя: {student.FirstName} Фамилия: {student.LastName}");
                 }
 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка {ex.Message}");
+            }
+        }
+
+        public static async Task GetCountGendersByIndexGroup()
+        {
+            try
+            {
+                Console.WriteLine("Введите индекс группы");
+                int.TryParse(Console.ReadLine(), out int index);
+
+                var result = await client.GetAsync($"CountGenderByIndexGroup?indexGroup={index}");
+
+                var data = await result.Content.ReadFromJsonAsync<IEnumerable<StudentDTO>>();
+
+                Console.WriteLine($"Ответ");
+
+                var male = 0;
+                var female = 0;
+
+                foreach (var student in data)
+                {
+                    if (student.Gender == 1)
+                        male++;
+
+                    else
+                        female++;
+                }
+                Console.WriteLine($"Мальчиков: {male} \tДевочек: {female}");
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка {ex.Message}");
+            }
+        }
+
+        public static async Task GetListUnboundStudents()
+        {
+            try
+            {               
+                var result = await client.GetAsync($"ListUnboundStudents");
+
+                var data = await result.Content.ReadFromJsonAsync<IEnumerable<StudentDTO>>();
+
+                Console.WriteLine($"Ответ");
+                Console.WriteLine($"Кол-во не привязанных студентов {data.Count()}");
+
+                foreach (var student in data)
+                {
+                    Console.WriteLine($"Имя: {student.FirstName} Фамилия: {student.LastName}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка {ex.Message}");
+            }
+        }
+
+        public static async Task GetListEmptyGroups()
+        {
+            try
+            {
+                var resultGroups = await client.GetAsync($"ListEmptyGroups");
+                var dataGroups = await resultGroups.Content.ReadFromJsonAsync<IEnumerable<GroupDTO>>();
+
+                var count = 0;
+                foreach (var group in dataGroups)
+                {
+                    Console.WriteLine($"Пустая группа: ID={group.Id}, Название={group.Title}");
+                    count++;
+                }
+
+                Console.WriteLine($"Всего пустых групп: {count}");
             }
             catch (Exception ex)
             {
