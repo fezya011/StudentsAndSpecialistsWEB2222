@@ -21,7 +21,12 @@ namespace StudentsAndGroupsConsole
                     Console.WriteLine("2 - Получить список кол-ва мальчиков и девочек из группы по указанному индексу группы");
                     Console.WriteLine("3 - Получить список студентов не привязанных к группе");
                     Console.WriteLine("4 - Получить список пустых групп");
-                    Console.WriteLine("5 - Выход");
+                    Console.WriteLine("5 - Получить список групп с количеством студентов в них");
+                    Console.WriteLine("6 - Получить список групп с количеством студентов в них с индексом специальности");
+                    Console.WriteLine("7 - Добавить группу по указанной специальности");
+                    Console.WriteLine("8 - Выход");
+                    Console.WriteLine("9 - Выход");
+                    Console.WriteLine("10 - Выход");
                     Console.Write("Ваш выбор: ");
 
                     var choice = Console.ReadLine();
@@ -41,6 +46,21 @@ namespace StudentsAndGroupsConsole
                             GetListEmptyGroups();
                             break;
                         case "5":
+                            GetListGroupsCountStudents();
+                            break;
+                        case "6":
+                            GetListGroupsCountStudentsAndIndex();
+                            break;
+                        case "7":
+                            AddGroupBySpecial();
+                            break;
+                        case "8":
+                            exit = true;
+                            break;
+                        case "9":
+                            exit = true;
+                            break;
+                        case "10":
                             exit = true;
                             break;
                         default:
@@ -153,6 +173,76 @@ namespace StudentsAndGroupsConsole
                 }
 
                 Console.WriteLine($"Всего пустых групп: {count}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка {ex.Message}");
+            }
+        }
+
+        public static async Task GetListGroupsCountStudents()
+        {
+            try
+            {
+                var resultGroups = await client.GetAsync($"ListGroupsCountStudents");
+                var dataGroups = await resultGroups.Content.ReadFromJsonAsync<IEnumerable<GroupDTO>>();
+
+                var count = 0;
+                foreach (var group in dataGroups)
+                {
+                    Console.WriteLine($"Группа: Название={group.Title}, кол-во студентов={group.StudentsCount}");
+                    count++;
+                }
+
+                Console.WriteLine($"Всего групп: {count}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка {ex.Message}");
+            }
+        }
+
+        public static async Task GetListGroupsCountStudentsAndIndex()
+        {
+            try
+            {
+                var resultGroups = await client.GetAsync($"ListGroupsCountStudentsAndIndex");
+                var dataGroups = await resultGroups.Content.ReadFromJsonAsync<IEnumerable<GroupDTO>>();
+
+                var count = 0;
+                foreach (var group in dataGroups)
+                {
+                    Console.WriteLine($"Группа: Название={group.Title}, кол-во студентов={group.StudentsCount}, индекс={group.IdSpecial}");
+                    count++;
+                }
+
+                Console.WriteLine($"Всего групп: {count}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка {ex.Message}");
+            }
+        }
+
+        public static async Task AddGroupBySpecial()
+        {
+            try
+            {
+                Console.WriteLine("Введите Id специальности");
+                var idSpecial = Console.ReadLine();
+
+                Console.WriteLine("Введите название новой группы");
+                var title = Console.ReadLine();
+
+                var responce = await client.PostAsync($"AddGroupBySpecial?idSpecial={idSpecial}&title={title}", null);
+
+                if (responce.IsSuccessStatusCode)
+                    Console.WriteLine("Группа успешно добавлена!");
+                else
+                {
+                    var error = await responce.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Ошибка: {error}");
+                }
             }
             catch (Exception ex)
             {

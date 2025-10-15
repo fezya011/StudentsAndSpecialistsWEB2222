@@ -50,5 +50,43 @@ namespace StudentsAndSpecialistsWEB.Controllers
             return Ok(result);
         }
 
+        [HttpGet("ListGroupsCountStudents")]
+        public async Task<ActionResult<IEnumerable<GroupDTO>>> ListGroupsCountStudents()
+        {
+            var command = new CommandListGroupStudents();
+            var result = await mediator.SendAsync(command);
+            return Ok(result);
+        }
+
+        [HttpGet("ListGroupsCountStudentsAndIndex")]
+        public async Task<ActionResult<IEnumerable<GroupDTO>>> ListGroupsCountStudentsAndIndex()
+        {
+            var command = new CommandListIndexSpecial();
+            var result = await mediator.SendAsync(command);
+            return Ok(result);
+        }
+
+        [HttpPost("AddGroupBySpecial")]
+        public async Task<ActionResult> AddGroupBySpecial(int idSpecial, string title)
+        {
+            var command = new CommandAddGroupBySpecial
+            {
+                IdSpecial = idSpecial,
+                Title = title,
+            };
+
+            try
+            {
+                await mediator.SendAsync(command);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok();
+        }
+
+
+
     }
 }
