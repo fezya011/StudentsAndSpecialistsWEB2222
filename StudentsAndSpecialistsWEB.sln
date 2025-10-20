@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36511.14 d17.14
+VisualStudioVersion = 17.14.36511.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsAndSpecialistsWEB", "StudentsAndSpecialistsWEB\StudentsAndSpecialistsWEB.csproj", "{9EA65E06-821D-4115-9032-040CB5754A49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentsAndGroupsConsole", "StudentsAndGroupsConsole\StudentsAndGroupsConsole.csproj", "{5010033C-1A52-4779-96D7-31CB0DC0BF03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfAppStudentsAndSpecialists", "WpfAppStudentsAndSpecialists\WpfAppStudentsAndSpecialists.csproj", "{1D272B6D-8243-4E98-9AD5-B553E604FCF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{5010033C-1A52-4779-96D7-31CB0DC0BF03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5010033C-1A52-4779-96D7-31CB0DC0BF03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5010033C-1A52-4779-96D7-31CB0DC0BF03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D272B6D-8243-4E98-9AD5-B553E604FCF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D272B6D-8243-4E98-9AD5-B553E604FCF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D272B6D-8243-4E98-9AD5-B553E604FCF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D272B6D-8243-4E98-9AD5-B553E604FCF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
