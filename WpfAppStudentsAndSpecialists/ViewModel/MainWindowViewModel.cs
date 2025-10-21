@@ -9,7 +9,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
+using WpfAppStudentsAndSpecialists.View;
 using WpfAppStudentsAndSpecialists.VMTools;
 
 namespace WpfAppStudentsAndSpecialists.ViewModel
@@ -65,6 +65,7 @@ namespace WpfAppStudentsAndSpecialists.ViewModel
         public ICommand ShowListStudentsByIndexGroup { get; set; }
         public ICommand ClearList { get; set; }
         public ICommand ShowGendersCountByIndexGroup { get; set; }
+        public ICommand GoToGroupsWindow { get; set; }
 
         public MainWindowViewModel() 
         {
@@ -114,7 +115,13 @@ namespace WpfAppStudentsAndSpecialists.ViewModel
                 Male = 0;
             }, () => true);
 
-          
+            GoToGroupsWindow = new CommandVM(async () =>
+            {
+                GroupWindow group = new GroupWindow();
+                group.ShowDialog();
+            }, () => true);
+
+
         }
 
     }

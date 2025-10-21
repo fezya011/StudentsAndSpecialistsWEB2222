@@ -39,8 +39,8 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
-            <Button Content="Перейти к группам"/>
+        <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Margin="5">
+            <Button Content="Перейти к группам" Command="{Binding GoToGroupsWindow}"/>
         </StackPanel>
 
 
